@@ -11,7 +11,8 @@ import SwiftUI
 struct TheSquareGameApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MenuView() // Set the MenuView as the starting view
         }
     }
 }
+
