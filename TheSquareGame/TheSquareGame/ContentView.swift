@@ -1,12 +1,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    // Added Binding for highest score
     @Binding var highestScore: Int
-    
-    // Define other state variables (same as earlier code)
     @State private var buttonColors: [Color] = [
-        .red, .blue, .red, .blue, .red, .blue, .red, .blue, .red
+        .red, .blue, .green, .yellow, .red, .blue, .green, .yellow, .yellow
     ]
     @State private var selectedButtons: [Bool] = Array(repeating: false, count: 9)
     @State private var disabledButtons: [Bool] = Array(repeating: false, count: 9)
@@ -34,22 +31,17 @@ struct ContentView: View {
             selectedButtons = Array(repeating: false, count: 9)
         }
 
-        if score == 4 {
-            message = "Game Over! You won! Press Reset to play again."
-            stopTimer()
+        // Check if all buttons are disabled (all matches found)
+        if disabledButtons.allSatisfy({ $0 }) {
+            message = "All matches found! Board reset."
+            resetBoard()
         }
     }
 
-    func resetGame() {
-        if score > highestScore {
-            highestScore = score // Update highest score
-        }
-        score = 0
-        message = "Game Reset! Try Again."
-        disabledButtons = Array(repeating: false, count: 9)
-        selectedButtons = Array(repeating: false, count: 9)
-        remainingTime = 60
-        startTimer()
+    func resetBoard() {
+        buttonColors.shuffle() // Shuffle colors
+        disabledButtons = Array(repeating: false, count: 9) // Re-enable all buttons
+        selectedButtons = Array(repeating: false, count: 9) // Clear selections
     }
 
     func startTimer() {
@@ -58,8 +50,8 @@ struct ContentView: View {
             if remainingTime > 0 {
                 remainingTime -= 1
             } else {
-                message = "Time's up! The game has reset."
-                resetGame()
+                stopTimer()
+                message = "Time's up! Game over."
             }
         }
     }
@@ -111,12 +103,13 @@ struct ContentView: View {
                 .padding(.top, 20)
 
             Button(action: {
-                resetGame()
+                resetBoard()
+                message = "Board reset! Continue playing."
             }) {
-                Text("Reset Game")
+                Text("Reset Board")
                     .font(.headline)
                     .padding()
-                    .background(Color.green)
+                    .background(Color.blue)
                     .foregroundColor(.white)
                     .cornerRadius(10)
             }
@@ -134,6 +127,6 @@ struct ContentView: View {
 
 struct GameApp_Previews: PreviewProvider {
     static var previews: some View {
-        MenuView()
+        ContentView(highestScore: .constant(0))
     }
 }
