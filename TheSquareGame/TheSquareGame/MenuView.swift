@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct MenuView: View {
-    @State private var highestScore: Int = 0 // Placeholder for the highest score
-    
+    @State private var highestScores: [String: Int] = ["Easy": 0, "Medium": 0, "Hard": 0]
+
     var body: some View {
         NavigationView {
             VStack(spacing: 30) {
@@ -13,8 +13,8 @@ struct MenuView: View {
                     .foregroundColor(.blue)
                     .padding()
 
-                // Start Game Button
-                NavigationLink(destination: ContentView(highestScore: $highestScore)) {
+                // Start Game Button → Goes to Level Selection
+                NavigationLink(destination: LevelSelectionView(highestScores: $highestScores)) {
                     Text("Start Game")
                         .font(.title2)
                         .padding()
@@ -24,7 +24,7 @@ struct MenuView: View {
                 }
 
                 // Highest Score Button
-                NavigationLink(destination: HighestScoreView(highestScore: highestScore)) {
+                NavigationLink(destination: HighestScoreView(highestScores: highestScores)) {
                     Text("Highest Score")
                         .font(.title2)
                         .padding()

@@ -1,25 +1,20 @@
-//
-//  HighestScoreView.swift
-//  TheSquareGame
-//
-//  Created by Samod 037       on 2025-01-11.
-//
-
 import SwiftUI
 
 struct HighestScoreView: View {
-    let highestScore: Int // Pass the highest score to this view
-    
+    let highestScores: [String: Int]
+
     var body: some View {
         VStack(spacing: 20) {
-            Text("Highest Score")
+            Text("Highest Scores")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding()
 
-            Text("The highest score achieved is: \(highestScore)")
-                .font(.title2)
-                .padding()
+            ForEach(["Easy", "Medium", "Hard"], id: \.self) { level in
+                Text("\(level): \(highestScores[level] ?? 0)")
+                    .font(.title2)
+                    .padding()
+            }
 
             Spacer()
         }
