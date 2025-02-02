@@ -82,9 +82,18 @@ struct ContentView: View {
             selectedButtons = Array(repeating: false, count: gridSize * gridSize)
         }
 
-        // Check if 16 selections (8 pairs) have been made
-        if selectionsCount == 4 {
-            reEnableAndShuffle()
+        if level == "Easy" {
+            if selectionsCount == 4 {
+                reEnableAndShuffle()
+            }
+        } else if level == "Medium" {
+            if selectionsCount == 8 {
+                reEnableAndShuffle()
+            }
+        } else if level == "Hard" {
+            if selectionsCount == 12 {
+                reEnableAndShuffle()
+            }
         }
     }
 
